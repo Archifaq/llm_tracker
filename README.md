@@ -38,6 +38,25 @@ cp config.example.toml config.toml
 cp .env.example .env   # fill in the keys for the providers you enabled
 ```
 
+## Try it without any API key
+
+`config.demo.toml` uses an offline adapter (`kind = "offline"`,
+`src/e100_visibility/providers/offline_provider.py`) that returns
+deterministic canned Polish answers instead of calling a real API --
+zero cost, zero network, zero keys. Useful for trying the CLI/report
+interface while real provider keys are still being arranged:
+
+```bash
+e100-visibility run --config config.demo.toml
+e100-visibility run --config config.demo.toml   # run again to see the trend section
+```
+
+Same query pool/brand/competitors as the real config, two synthetic
+"providers" so the report shows a genuine multi-provider comparison. Since
+it's deterministic, a second run reports "без изменений" (no change) in the
+trend section, not new random numbers -- that's the tool correctly
+detecting an unchanged input, not a bug.
+
 ## Run
 
 ```bash

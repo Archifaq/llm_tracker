@@ -110,24 +110,24 @@ def _classify(sentence: str, position: int, total: int) -> tuple[str, str, str]:
         return (
             CONTEXT_CAVEAT,
             SENTIMENT_NEGATIVE,
-            "Marka wymieniona z zastrzeżeniem lub wadą w opisie.",
+            "Бренд упомянут с оговоркой или недостатком.",
         )
     if has_positive and position == 1:
         return (
             CONTEXT_BEST,
             SENTIMENT_POSITIVE,
-            "Marka poleca się/wskazywana jako najlepsza lub wiodąca opcja.",
+            "Бренд рекомендован как лучший или ведущий вариант.",
         )
     if total > 1:
         return (
             CONTEXT_ONE_OF_SEVERAL,
             SENTIMENT_NEUTRAL,
-            "Marka wymieniona jako jedna z kilku równoważnych opcji.",
+            "Бренд упомянут как один из нескольких равнозначных вариантов.",
         )
     return (
         CONTEXT_IN_PASSING,
         SENTIMENT_NEUTRAL,
-        "Marka wspomniana bez szerszej oceny.",
+        "Бренд упомянут вскользь без отдельной оценки.",
     )
 
 
@@ -144,7 +144,7 @@ def extract_heuristic(
             position=None,
             total_brands=0,
             brands_in_order=(),
-            context="Odpowiedź jest pusta lub zbyt krótka do analizy.",
+            context="Ответ пуст или слишком короткий для анализа.",
             context_category=CONTEXT_NOT_MENTIONED,
             sentiment=SENTIMENT_NEUTRAL,
             has_source_link=False,
@@ -167,7 +167,7 @@ def extract_heuristic(
             position=None,
             total_brands=0,
             brands_in_order=(),
-            context=f"Marka {brand.name} nie została wymieniona w odpowiedzi.",
+            context=f"Бренд {brand.name} не упомянут в ответе.",
             context_category=CONTEXT_NOT_MENTIONED,
             sentiment=SENTIMENT_NEUTRAL,
             has_source_link=has_source_link,
@@ -192,7 +192,7 @@ def extract_heuristic(
             position=None,
             total_brands=len(order),
             brands_in_order=names_in_order,
-            context=f"Marka {brand.name} nie została wymieniona w odpowiedzi.",
+            context=f"Бренд {brand.name} не упомянут в ответе.",
             context_category=CONTEXT_NOT_MENTIONED,
             sentiment=SENTIMENT_NEUTRAL,
             has_source_link=has_source_link,

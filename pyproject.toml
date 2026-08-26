@@ -1,0 +1,16 @@
+[project]
+name = "e100-visibility-tracker"
+version = "0.1.0"
+description = "GEO/AI-visibility tracker for the E100 brand across LLM assistants"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+e100-visibility = "e100_visibility.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

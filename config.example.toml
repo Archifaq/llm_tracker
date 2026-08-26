@@ -1,0 +1,138 @@
+# E100 GEO/AI-visibility tracker -- configuration.
+#
+# Copy to config.toml and edit. Nothing here is hardcoded in the source: the
+# market/language, brand aliases, competitor dictionary, provider list and
+# query pool are all read from this file.
+#
+# NOTE: `queries` must stay above the first `[[providers]]`/`[[competitors]]`
+# table header -- in TOML, a bare top-level array after a table header is
+# parsed as belonging to that table, not to the document root.
+
+# Query pool for the Polish "karty paliwowe dla firm" (business fuel cards)
+# topic. Deliberately does not mention E100 by name, so as not to bias the
+# models' answers.
+queries = [
+  "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
+  "Polecane karty flotowe dla małej firmy transportowej",
+  "Ranking kart paliwowych dla firm 2026",
+  "Jak wybrać kartę paliwową dla floty pojazdów?",
+  "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
+  "Karty paliwowe bez limitu kredytowego dla firm",
+  "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
+  "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
+  "Porównanie kart paliwowych dostępnych na polskim rynku",
+  "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
+  "Karta paliwowa dla dużej floty samochodów dostawczych",
+  "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
+  "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
+  "Opinie o kartach paliwowych dla firm – co wybrać?",
+  "Karta flotowa z rabatem na paliwo dla firm transportowych",
+  "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
+  "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
+  "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
+]
+
+[market]
+language = "pl"
+country = "PL"
+label = "Poland"
+
+[brand]
+name = "E100"
+domain = "e100.eu"
+aliases = ["E100", "e100.eu", "Е100", "E 100", "E-100"]
+
+# Known competitors in the Polish business fuel-card market, used by the
+# heuristic analyzer to detect and order brand mentions. Extend freely --
+# a brand not listed here simply won't be recognised by name (the LLM-based
+# analysis method does not need this list at all, see [analysis] below).
+[[competitors]]
+name = "DKV"
+aliases = ["DKV", "DKV Mobility"]
+
+[[competitors]]
+name = "UTA"
+aliases = ["UTA", "UTA Edenred"]
+
+[[competitors]]
+name = "Shell"
+aliases = ["Shell", "Shell Card", "Karta Shell"]
+
+[[competitors]]
+name = "BP"
+aliases = ["BP", "BP Plus", "Karta BP"]
+
+[[competitors]]
+name = "Orlen"
+aliases = ["Orlen", "PKN Orlen", "Flota Orlen"]
+
+[[competitors]]
+name = "Eurowag"
+aliases = ["Eurowag"]
+
+[[competitors]]
+name = "Routex"
+aliases = ["Routex"]
+
+[[competitors]]
+name = "Circle K"
+aliases = ["Circle K"]
+
+[[competitors]]
+name = "Aral"
+aliases = ["Aral"]
+
+[[competitors]]
+name = "Esso"
+aliases = ["Esso"]
+
+[[competitors]]
+name = "Lotos"
+aliases = ["Lotos"]
+
+[[competitors]]
+name = "W+"
+aliases = ["Karta W+", "W Plus"]
+
+# One entry per LLM assistant to poll. `kind` selects the adapter
+# (see src/e100_visibility/providers/registry.py); `name` is how this
+# provider shows up in reports and history, so it can differ from `kind`
+# if you configure the same API with two different models.
+[[providers]]
+name = "openai"
+kind = "openai"
+model = "gpt-4o"
+api_key_env = "OPENAI_API_KEY"
+enabled = true
+timeout_seconds = 60
+
+[[providers]]
+name = "gemini"
+kind = "gemini"
+model = "gemini-2.5-flash"
+api_key_env = "GEMINI_API_KEY"
+enabled = true
+timeout_seconds = 60
+
+[[providers]]
+name = "perplexity"
+kind = "perplexity"
+model = "sonar"
+api_key_env = "PERPLEXITY_API_KEY"
+enabled = true
+timeout_seconds = 60
+
+[analysis]
+# "heuristic": deterministic, local, free, uses the [[competitors]] list
+#   above and is what the test suite exercises.
+# "llm": sends the analyzer system prompt (see README) to the provider named
+#   below and parses its structured JSON reply. Costs one extra call per
+#   query x provider, but recognises competitors not in your dictionary.
+method = "heuristic"
+provider = "openai"
+
+[storage]
+path = "output/history.sqlite3"
+
+[report]
+output_dir = "output"

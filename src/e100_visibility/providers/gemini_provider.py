@@ -10,7 +10,17 @@ API_URL_TEMPLATE = "https://generativelanguage.googleapis.com/v1beta/models/{mod
 
 
 class GeminiProvider:
-    """Adapter for Google's Gemini API (generateContent)."""
+    """Adapter for Google's Gemini API (generateContent).
+
+    Always enables the ``google_search`` tool so the model grounds its
+    answer in live search results and returns ``groundingChunks`` (without
+    it, Gemini answers from training data alone and ``has_source_link`` in
+    the analysis step is never true). Works as a normal tool call on an
+    existing model -- no dedicated search model needed, unlike OpenAI's
+    Chat Completions API. The Gemini API rejects mixing a search tool with
+    non-search tools in the same request; since this adapter only ever
+    sends this one tool, that restriction doesn't apply here.
+    """
 
     def __init__(self, *, name: str, model: str, api_key_env: str, timeout_seconds: float = 60.0) -> None:
         self.name = name
@@ -24,7 +34,10 @@ class GeminiProvider:
             raise ProviderError(self.name, f"environment variable {self.api_key_env} is not set")
 
         url = API_URL_TEMPLATE.format(model=urllib.parse.quote(self.model))
-        payload = {"contents": [{"parts": [{"text": query}]}]}
+        payload = {
+            "contents": [{"parts": [{"text": query}]}],
+            "tools": [{"google_search": {}}],
+        }
         data = post_json(
             self.name,
             url,

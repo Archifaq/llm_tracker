@@ -9,7 +9,19 @@ API_URL = "https://api.openai.com/v1/chat/completions"
 
 
 class OpenAIProvider:
-    """Adapter for OpenAI's Chat Completions API (used for ChatGPT models)."""
+    """Adapter for OpenAI's Chat Completions API (used for ChatGPT models).
+
+    Always requests web search via ``web_search_options`` so the model
+    answers grounded in live results and returns ``url_citation``
+    annotations (otherwise it answers from parametric memory only, and
+    ``has_source_link`` in the analysis step is never true). This only
+    works with a Chat-Completions search model -- currently
+    ``gpt-5-search-api`` (the ``*-search-preview`` models it replaced were
+    shut down by OpenAI on 2026-07-23). A plain chat model (e.g. ``gpt-4o``)
+    rejects this field with a 400 error; Chat Completions has no way to
+    bolt web search onto a non-search model -- that requires the separate
+    Responses API, which this adapter does not use.
+    """
 
     def __init__(self, *, name: str, model: str, api_key_env: str, timeout_seconds: float = 60.0) -> None:
         self.name = name
@@ -26,6 +38,7 @@ class OpenAIProvider:
             "model": self.model,
             "messages": [{"role": "user", "content": query}],
             "temperature": 0.7,
+            "web_search_options": {},
         }
         data = post_json(
             self.name,

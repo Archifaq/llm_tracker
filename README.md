@@ -79,6 +79,35 @@ it -- language/market is a config parameter, not a code branch.
 `[[competitors]]` table header -- in TOML, a bare array after a table header
 belongs to that table, not to the document root.
 
+### Web search
+
+The OpenAI and Gemini adapters always request web search, so their answers
+are grounded in live results and carry citations (`has_source_link` in the
+report is otherwise almost always "нет", since a plain chat-completion
+answers from training data with nothing to cite):
+
+- **OpenAI**: sends `"web_search_options": {}` on every Chat Completions
+  call. This *requires* `model` to be a Chat-Completions search model --
+  currently `gpt-5-search-api` (as set in `config.example.toml`). A plain
+  chat model such as `gpt-4o` rejects this field with a 400 error; Chat
+  Completions has no way to add web search to a non-search model (that
+  needs OpenAI's separate Responses API, which this adapter doesn't use).
+  The previous search models, `gpt-4o-search-preview` /
+  `gpt-4o-mini-search-preview`, were shut down by OpenAI on 2026-07-23.
+- **Gemini**: sends `"tools": [{"google_search": {}}]` on every
+  `generateContent` call. Unlike OpenAI, this is a normal tool on an
+  ordinary model (`gemini-2.5-flash` works as-is) -- no dedicated search
+  model needed.
+- Known gap: Gemini's `groundingChunks[].web.uri` is often a
+  `vertexaisearch.cloud.google.com` redirect rather than the literal
+  `e100.eu` URL, so the heuristic analyzer's domain-substring check for
+  `has_source_link` can under-count Gemini citations even when e100.eu was
+  in fact cited. Resolving the redirect (an extra HTTP call per citation)
+  was left out of scope here.
+- If `[analysis].method = "llm"` and `[analysis].provider = "openai"`, the
+  analyzer call itself also goes through the search-enabled model above --
+  slightly slower/pricier per analysis call, functionally harmless.
+
 ### Adding a new LLM provider
 
 1. Write a class implementing `ask(self, query, *, language, country) ->

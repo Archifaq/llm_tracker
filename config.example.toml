@@ -101,7 +101,13 @@ aliases = ["Karta W+", "W Plus"]
 [[providers]]
 name = "openai"
 kind = "openai"
-model = "gpt-4o"
+# Must be a Chat-Completions search model, not a plain chat model: the
+# OpenAI adapter always sends "web_search_options" to force a grounded,
+# citable answer, and Chat Completions rejects that field on non-search
+# models (400 error). "gpt-4o" would NOT work here.
+# gpt-5-search-api is the current one -- it replaced gpt-4o-search-preview /
+# gpt-4o-mini-search-preview, which OpenAI shut down on 2026-07-23.
+model = "gpt-5-search-api"
 api_key_env = "OPENAI_API_KEY"
 enabled = true
 timeout_seconds = 60
@@ -109,6 +115,9 @@ timeout_seconds = 60
 [[providers]]
 name = "gemini"
 kind = "gemini"
+# Any current Gemini model works here: the adapter always enables the
+# "google_search" grounding tool (a normal tool call, not a dedicated
+# model like OpenAI's).
 model = "gemini-2.5-flash"
 api_key_env = "GEMINI_API_KEY"
 enabled = true

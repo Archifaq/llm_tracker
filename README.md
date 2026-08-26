@@ -105,8 +105,20 @@ answers from training data with nothing to cite):
   in fact cited. Resolving the redirect (an extra HTTP call per citation)
   was left out of scope here.
 - If `[analysis].method = "llm"` and `[analysis].provider = "openai"`, the
-  analyzer call itself also goes through the search-enabled model above --
-  slightly slower/pricier per analysis call, functionally harmless.
+  analyzer call itself also goes through the search-enabled model above,
+  so it will search the web and append its own citations/annotations
+  around the JSON reply it's asked to return. **This combination has not
+  been exercised against a live API key** -- the unit tests mock the HTTP
+  layer, so they can't tell you whether `gpt-5-search-api` reliably wraps
+  its JSON in enough extra text/citation markup to break
+  `analyze_with_llm`'s `\{.*\}` extraction (the model's own answer
+  already tests fine with an untouched `gpt-4o`-style reply; only the
+  search-specific behavior is unverified). Before relying on this
+  specific combination in production, run one real call with
+  `OPENAI_API_KEY` set against a couple of queries and check that
+  `analyze_with_llm` still parses a clean result. Until then, prefer
+  `[analysis].method = "heuristic"` (the config default) or point
+  `[analysis].provider` at a non-search model if you add one.
 
 ### Adding a new LLM provider
 

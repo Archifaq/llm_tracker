@@ -1,0 +1,132 @@
+# CI/production config -- used by .github/workflows/weekly-run.yml.
+#
+# Committed to the repo, like config.example.toml: contains no secrets
+# (provider API keys are read from the OPENAI_API_KEY / GEMINI_API_KEY /
+# PERPLEXITY_API_KEY environment variables, set by the workflow from GitHub
+# Actions repo secrets -- never written to this file).
+#
+# The only difference from config.example.toml is [storage]/[report]: both
+# point inside the repo (data/, web/data/) instead of the gitignored
+# output/, because GitHub Actions runners are ephemeral -- the run history
+# has to be committed back to the repo after every scheduled run, not left
+# on the runner's disk. Local ad-hoc/manual runs should keep using
+# config.toml (copied from config.example.toml, gitignored) so a developer's
+# own test runs don't pollute the committed history.
+#
+# NOTE: keep `queries` above the first `[[providers]]`/`[[competitors]]`
+# table header -- see config.example.toml for why.
+
+queries = [
+  "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
+  "Polecane karty flotowe dla małej firmy transportowej",
+  "Ranking kart paliwowych dla firm 2026",
+  "Jak wybrać kartę paliwową dla floty pojazdów?",
+  "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
+  "Karty paliwowe bez limitu kredytowego dla firm",
+  "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
+  "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
+  "Porównanie kart paliwowych dostępnych na polskim rynku",
+  "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
+  "Karta paliwowa dla dużej floty samochodów dostawczych",
+  "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
+  "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
+  "Opinie o kartach paliwowych dla firm – co wybrać?",
+  "Karta flotowa z rabatem na paliwo dla firm transportowych",
+  "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
+  "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
+  "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
+]
+
+[market]
+language = "pl"
+country = "PL"
+label = "Poland"
+
+[brand]
+name = "E100"
+domain = "e100.eu"
+aliases = ["E100", "e100.eu", "Е100", "E 100", "E-100"]
+
+[[competitors]]
+name = "DKV"
+aliases = ["DKV", "DKV Mobility"]
+
+[[competitors]]
+name = "UTA"
+aliases = ["UTA", "UTA Edenred"]
+
+[[competitors]]
+name = "Shell"
+aliases = ["Shell", "Shell Card", "Karta Shell"]
+
+[[competitors]]
+name = "BP"
+aliases = ["BP", "BP Plus", "Karta BP"]
+
+[[competitors]]
+name = "Orlen"
+aliases = ["Orlen", "PKN Orlen", "Flota Orlen"]
+
+[[competitors]]
+name = "Eurowag"
+aliases = ["Eurowag"]
+
+[[competitors]]
+name = "Routex"
+aliases = ["Routex"]
+
+[[competitors]]
+name = "Circle K"
+aliases = ["Circle K"]
+
+[[competitors]]
+name = "Aral"
+aliases = ["Aral"]
+
+[[competitors]]
+name = "Esso"
+aliases = ["Esso"]
+
+[[competitors]]
+name = "Lotos"
+aliases = ["Lotos"]
+
+[[competitors]]
+name = "W+"
+aliases = ["Karta W+", "W Plus"]
+
+[[providers]]
+name = "openai"
+kind = "openai"
+# Chat-Completions search model -- see README "Web search" section for why
+# a plain chat model won't work here.
+model = "gpt-5-search-api"
+api_key_env = "OPENAI_API_KEY"
+enabled = true
+timeout_seconds = 60
+
+[[providers]]
+name = "gemini"
+kind = "gemini"
+model = "gemini-2.5-flash"
+api_key_env = "GEMINI_API_KEY"
+enabled = true
+timeout_seconds = 60
+
+[[providers]]
+name = "perplexity"
+kind = "perplexity"
+model = "sonar"
+api_key_env = "PERPLEXITY_API_KEY"
+enabled = true
+timeout_seconds = 60
+
+[analysis]
+method = "heuristic"
+provider = "openai"
+
+[storage]
+path = "data/history.sqlite3"
+
+[report]
+output_dir = "web/data"

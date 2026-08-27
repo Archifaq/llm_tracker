@@ -98,6 +98,23 @@ observation -- only the same derived fields already shown in the text
 report (query, provider, mentioned, position, context, sentiment, ...) go
 into this file, because it is meant to be committed to a public repo.
 
+### config.toml vs. config.ci.toml
+
+Two committed config templates, for two different histories:
+
+- `config.example.toml` -- copy to `config.toml` (gitignored) for your own
+  local/manual runs. Default `[storage].path`/`[report].output_dir` point
+  inside `output/` (also gitignored), so ad-hoc local testing never touches
+  the committed history.
+- `config.ci.toml` -- used by the weekly GitHub Actions workflow (see
+  below). No secrets (same as `config.example.toml` -- provider keys still
+  come from the environment). `[storage].path = "data/history.sqlite3"` and
+  `[report].output_dir = "web/data"` point *inside* the repo on purpose:
+  Actions runners are ephemeral, so the run history has to be committed
+  back after every scheduled run, not left on the runner's disk. Both paths
+  are deliberately excluded from `.gitignore`'s `output/`/`*.sqlite3`-style
+  rules -- see the comment in `.gitignore` if you add another data path.
+
 ## Configuration
 
 See `config.example.toml` for the full, commented default: Polish

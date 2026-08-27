@@ -5,4 +5,12 @@ __pycache__/
 config.toml
 .env
 output/
-*.sqlite3
+
+# NOTE: deliberately NOT a blanket "*.sqlite3"/"data/"/"web/data/" ignore.
+# config.ci.toml (committed, no secrets) points [storage].path at
+# data/history.sqlite3 and [report].output_dir / export-web --out at
+# web/data/ -- both are meant to be committed and grow across scheduled CI
+# runs (GitHub Actions runners are ephemeral; the history has to live in
+# the repo, not on the runner). Local ad-hoc runs against config.toml (or
+# config.demo.toml) default to output/, which stays ignored above -- if you
+# point a local config's [storage].path outside output/, ignore it by hand.

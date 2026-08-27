@@ -2,6 +2,7 @@
 
     e100-visibility run --config config.toml
     e100-visibility report --config config.toml --run-id 3
+    e100-visibility export-web --config config.toml --out web/data
 
 Meant to be invoked once per execution (by hand, or from cron/any external
 scheduler) -- this tool itself has no built-in scheduling loop, per the
@@ -11,6 +12,7 @@ brief: "выполнение по расписанию настраивает п
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from dataclasses import replace
 from datetime import datetime, timezone
@@ -18,6 +20,7 @@ from pathlib import Path
 
 from .analysis import analyze
 from .config import AppConfig, ConfigError, load_config
+from .export import export_all_runs
 from .fetch import fetch_all
 from .models import Observation
 from .providers import build_provider
@@ -200,6 +203,24 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_export_web(args: argparse.Namespace) -> int:
+    try:
+        config = load_config(args.config)
+    except ConfigError as exc:
+        print(f"config error: {exc}", file=sys.stderr)
+        return 1
+
+    runs = export_all_runs(config)
+
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    runs_path = out_dir / "runs.json"
+    runs_path.write_text(json.dumps(runs, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    print(f"exported {len(runs)} run(s) to {runs_path}", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="e100-visibility")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -217,6 +238,13 @@ def build_parser() -> argparse.ArgumentParser:
     report_parser.add_argument("--config", default="config.toml", help="path to config TOML file")
     report_parser.add_argument("--run-id", type=int, required=True)
     report_parser.set_defaults(func=cmd_report)
+
+    export_parser = subparsers.add_parser(
+        "export-web", help="export the full run history to JSON for the web dashboard (never raw answers/payloads)"
+    )
+    export_parser.add_argument("--config", default="config.toml", help="path to config TOML file")
+    export_parser.add_argument("--out", required=True, help="directory to write runs.json into")
+    export_parser.set_defaults(func=cmd_export_web)
 
     return parser
 

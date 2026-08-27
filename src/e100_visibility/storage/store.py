@@ -140,6 +140,17 @@ class RunStore:
         ).fetchall()
         return [_row_to_observation(row) for row in rows]
 
+    def list_runs(self) -> list[dict]:
+        """All stored runs, oldest first -- used by ``export-web`` to dump
+        the full history, not just the latest run."""
+        rows = self._conn.execute(
+            "SELECT id, started_at, market_language, market_country FROM runs ORDER BY id ASC"
+        ).fetchall()
+        return [
+            {"id": row["id"], "started_at": row["started_at"], "language": row["market_language"], "country": row["market_country"]}
+            for row in rows
+        ]
+
 
 def _row_to_observation(row: sqlite3.Row) -> Observation:
     analysis = None

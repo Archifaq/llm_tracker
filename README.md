@@ -85,6 +85,19 @@ Each run prints the report to stdout and also writes
 `<output_dir>/report_run<id>.txt`; full history (raw answers + extracted
 fields) lives in `[storage].path` (a SQLite file).
 
+### Exporting history for the web dashboard
+
+```bash
+e100-visibility export-web --config config.toml --out web/data
+```
+
+Reads every stored run (not just the latest) and writes `web/data/runs.json`
+for the static dashboard in `web/` (see below) to `fetch()`. Deliberately
+excludes the raw LLM answer text and the raw API response of every
+observation -- only the same derived fields already shown in the text
+report (query, provider, mentioned, position, context, sentiment, ...) go
+into this file, because it is meant to be committed to a public repo.
+
 ## Configuration
 
 See `config.example.toml` for the full, commented default: Polish

@@ -2220,5 +2220,1146 @@
         "analysis_error": null
       }
     ]
+  },
+  {
+    "run_id": 3,
+    "timestamp": "2026-08-27T17:43:49.146687+00:00",
+    "market": {
+      "language": "pl",
+      "country": "PL",
+      "label": "Poland"
+    },
+    "aggregate": {
+      "brand_name": "E100",
+      "per_provider": [
+        {
+          "provider": "gemini",
+          "total_queries": 18,
+          "successful_queries": 0,
+          "mentioned_count": 0,
+          "share_of_voice_pct": null,
+          "avg_position": null
+        },
+        {
+          "provider": "openai",
+          "total_queries": 18,
+          "successful_queries": 0,
+          "mentioned_count": 0,
+          "share_of_voice_pct": null,
+          "avg_position": null
+        },
+        {
+          "provider": "perplexity",
+          "total_queries": 18,
+          "successful_queries": 0,
+          "mentioned_count": 0,
+          "share_of_voice_pct": null,
+          "avg_position": null
+        }
+      ],
+      "overall": {
+        "provider": "overall",
+        "total_queries": 54,
+        "successful_queries": 0,
+        "mentioned_count": 0,
+        "share_of_voice_pct": null,
+        "avg_position": null
+      },
+      "top_competitors": [],
+      "absent_queries": [],
+      "errors": [
+        {
+          "provider": "openai",
+          "query": "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Polecane karty flotowe dla małej firmy transportowej",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Ranking kart paliwowych dla firm 2026",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Jak wybrać kartę paliwową dla floty pojazdów?",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Karty paliwowe bez limitu kredytowego dla firm",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Porównanie kart paliwowych dostępnych na polskim rynku",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Karta paliwowa dla dużej floty samochodów dostawczych",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Opinie o kartach paliwowych dla firm – co wybrać?",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Karta flotowa z rabatem na paliwo dla firm transportowych",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "openai",
+          "query": "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
+          "message": "environment variable OPENAI_API_KEY is not set"
+        },
+        {
+          "provider": "gemini",
+          "query": "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Polecane karty flotowe dla małej firmy transportowej",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Ranking kart paliwowych dla firm 2026",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Jak wybrać kartę paliwową dla floty pojazdów?",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Karty paliwowe bez limitu kredytowego dla firm",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Porównanie kart paliwowych dostępnych na polskim rynku",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Karta paliwowa dla dużej floty samochodów dostawczych",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Opinie o kartach paliwowych dla firm – co wybrać?",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Karta flotowa z rabatem na paliwo dla firm transportowych",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "gemini",
+          "query": "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
+          "message": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Polecane karty flotowe dla małej firmy transportowej",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Ranking kart paliwowych dla firm 2026",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Jak wybrać kartę paliwową dla floty pojazdów?",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Karty paliwowe bez limitu kredytowego dla firm",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Porównanie kart paliwowych dostępnych na polskim rynku",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Karta paliwowa dla dużej floty samochodów dostawczych",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Opinie o kartach paliwowych dla firm – co wybrać?",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Karta flotowa z rabatem na paliwo dla firm transportowych",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        },
+        {
+          "provider": "perplexity",
+          "query": "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
+          "message": "environment variable PERPLEXITY_API_KEY is not set"
+        }
+      ],
+      "trend_overall": {
+        "provider": "overall",
+        "share_of_voice": {
+          "current": null,
+          "previous": null,
+          "delta": null,
+          "direction": "n/a"
+        },
+        "avg_position": {
+          "current": null,
+          "previous": null,
+          "delta": null,
+          "direction": "n/a"
+        }
+      },
+      "trend_per_provider": [
+        {
+          "provider": "gemini",
+          "share_of_voice": {
+            "current": null,
+            "previous": null,
+            "delta": null,
+            "direction": "n/a"
+          },
+          "avg_position": {
+            "current": null,
+            "previous": null,
+            "delta": null,
+            "direction": "n/a"
+          }
+        },
+        {
+          "provider": "openai",
+          "share_of_voice": {
+            "current": null,
+            "previous": null,
+            "delta": null,
+            "direction": "n/a"
+          },
+          "avg_position": {
+            "current": null,
+            "previous": null,
+            "delta": null,
+            "direction": "n/a"
+          }
+        },
+        {
+          "provider": "perplexity",
+          "share_of_voice": {
+            "current": null,
+            "previous": null,
+            "delta": null,
+            "direction": "n/a"
+          },
+          "avg_position": {
+            "current": null,
+            "previous": null,
+            "delta": null,
+            "direction": "n/a"
+          }
+        }
+      ],
+      "recommendations": []
+    },
+    "observations": [
+      {
+        "query": "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Polecane karty flotowe dla małej firmy transportowej",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Ranking kart paliwowych dla firm 2026",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jak wybrać kartę paliwową dla floty pojazdów?",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe bez limitu kredytowego dla firm",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Porównanie kart paliwowych dostępnych na polskim rynku",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla dużej floty samochodów dostawczych",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Opinie o kartach paliwowych dla firm – co wybrać?",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta flotowa z rabatem na paliwo dla firm transportowych",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
+        "provider": "openai",
+        "fetch_error": "environment variable OPENAI_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Polecane karty flotowe dla małej firmy transportowej",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Ranking kart paliwowych dla firm 2026",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jak wybrać kartę paliwową dla floty pojazdów?",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe bez limitu kredytowego dla firm",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Porównanie kart paliwowych dostępnych na polskim rynku",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla dużej floty samochodów dostawczych",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Opinie o kartach paliwowych dla firm – co wybrać?",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta flotowa z rabatem na paliwo dla firm transportowych",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
+        "provider": "gemini",
+        "fetch_error": "HTTP 429 from https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quota",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Polecane karty flotowe dla małej firmy transportowej",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Ranking kart paliwowych dla firm 2026",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jak wybrać kartę paliwową dla floty pojazdów?",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe bez limitu kredytowego dla firm",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Porównanie kart paliwowych dostępnych na polskim rynku",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla dużej floty samochodów dostawczych",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Opinie o kartach paliwowych dla firm – co wybrać?",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta flotowa z rabatem na paliwo dla firm transportowych",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      },
+      {
+        "query": "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
+        "provider": "perplexity",
+        "fetch_error": "environment variable PERPLEXITY_API_KEY is not set",
+        "mentioned": null,
+        "position": null,
+        "total_brands": null,
+        "context": null,
+        "context_category": null,
+        "sentiment": null,
+        "competitors_above": [],
+        "has_source_link": null,
+        "analysis_error": null
+      }
+    ]
   }
 ]

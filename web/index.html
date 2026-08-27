@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E100 -- видимость бренда в LLM-ассистентах</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="page-header">
+    <h1>E100 &mdash; видимость бренда в LLM-ассистентах</h1>
+    <p id="market-label" class="muted">Загрузка данных&hellip;</p>
+  </header>
+
+  <main id="app">
+    <section id="empty-state" class="card" hidden>
+      <p>История прогонов пока пуста.</p>
+      <p class="muted">
+        Она появится здесь после первого запуска
+        <code>e100-visibility run --config config.ci.toml</code> +
+        <code>e100-visibility export-web</code> (вручную или через
+        еженедельный GitHub Actions workflow).
+      </p>
+    </section>
+
+    <section id="load-error" class="card error" hidden>
+      <p>Не удалось загрузить <code>data/runs.json</code>.</p>
+      <p class="muted" id="load-error-detail"></p>
+    </section>
+
+    <div id="dashboard" hidden>
+      <section class="card controls">
+        <div class="control">
+          <label for="date-from">С</label>
+          <input type="date" id="date-from" />
+        </div>
+        <div class="control">
+          <label for="date-to">По</label>
+          <input type="date" id="date-to" />
+        </div>
+        <div class="control">
+          <label for="run-select">Прогон</label>
+          <select id="run-select"></select>
+        </div>
+        <p id="range-summary" class="muted"></p>
+      </section>
+
+      <section class="card">
+        <h2>Динамика во времени</h2>
+        <div class="charts-grid">
+          <div>
+            <h3>Share of Voice, %</h3>
+            <div id="chart-sov" class="chart"></div>
+          </div>
+          <div>
+            <h3>Средняя позиция E100 (ниже = лучше)</h3>
+            <div id="chart-position" class="chart"></div>
+          </div>
+        </div>
+        <p id="chart-empty" class="muted" hidden>
+          Недостаточно точек в выбранном диапазоне для графика.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 id="run-heading">Выбранный прогон</h2>
+        <div id="run-summary" class="stat-grid"></div>
+
+        <h3>Топ конкурентов</h3>
+        <div class="table-scroll">
+          <table id="competitors-table">
+            <thead>
+              <tr><th>#</th><th>Конкурент</th><th>Упоминаний</th><th>Средняя позиция</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3>Запросы, где E100 отсутствует полностью</h3>
+        <ul id="absent-queries-list" class="plain-list"></ul>
+
+        <h3>Наблюдения и рекомендации</h3>
+        <ol id="recommendations-list" class="plain-list"></ol>
+
+        <h3>Ошибки провайдеров в этом прогоне</h3>
+        <ul id="errors-list" class="plain-list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Все запросы &times; провайдеры (выбранный прогон)</h2>
+        <div class="table-scroll">
+          <table id="observations-table">
+            <thead>
+              <tr>
+                <th>Запрос</th>
+                <th>Платформа</th>
+                <th>Упоминание</th>
+                <th>Позиция</th>
+                <th>Контекст</th>
+                <th>Тональность</th>
+                <th>Кто выше E100</th>
+                <th>Ссылка на источник</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <p class="muted">
+      Данные: только производные показатели (упоминание, позиция, контекст,
+      тональность) &mdash; без сырых ответов моделей и сырых API-ответов.
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

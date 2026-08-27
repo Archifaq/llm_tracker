@@ -1,0 +1,293 @@
+:root {
+  --bg: #ffffff;
+  --bg-secondary: #f4f5f7;
+  --card-bg: #ffffff;
+  --text: #16181d;
+  --text-secondary: #5b6270;
+  --border: #e2e4e8;
+  --stripe: #fafbfc;
+  --accent: #2563eb;
+  --positive: #15803d;
+  --negative: #b91c1c;
+  --neutral: #6b7280;
+  --chart-1: #2563eb;
+  --chart-2: #f59e0b;
+  --chart-3: #16a34a;
+  --chart-4: #db2777;
+  --chart-5: #7c3aed;
+  --chart-6: #0891b2;
+  --chart-overall: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1115;
+    --bg-secondary: #171a21;
+    --card-bg: #171a21;
+    --text: #e6e8eb;
+    --text-secondary: #9aa1ac;
+    --border: #2a2e37;
+    --stripe: #1b1f27;
+    --accent: #60a5fa;
+    --positive: #4ade80;
+    --negative: #f87171;
+    --neutral: #9aa1ac;
+    --chart-1: #60a5fa;
+    --chart-2: #fbbf24;
+    --chart-3: #4ade80;
+    --chart-4: #f472b6;
+    --chart-5: #a78bfa;
+    --chart-6: #22d3ee;
+    --chart-overall: #e6e8eb;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.page-header,
+.page-footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 0.5rem;
+}
+
+.page-footer {
+  padding: 1rem 1.25rem 2rem;
+}
+
+main#app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+h1 {
+  font-size: 1.4rem;
+  margin: 0 0 0.25rem;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem;
+}
+
+h3 {
+  font-size: 0.95rem;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--text-secondary);
+}
+
+.muted {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+code {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.85em;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.card.error {
+  border-color: var(--negative);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 1rem;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.control label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+input[type="date"],
+select {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.9rem;
+  min-width: 12rem;
+}
+
+#range-summary {
+  margin: 0 0 0 auto;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  #range-summary {
+    margin-left: 0;
+  }
+}
+
+.chart {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.chart svg {
+  width: 100%;
+  height: auto;
+  min-width: 320px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-tile {
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.stat-tile .value {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.stat-tile .label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.88rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+td.wrap,
+th.wrap {
+  white-space: normal;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--stripe);
+}
+
+.plain-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.plain-list:empty::after {
+  content: "нет";
+  color: var(--text-secondary);
+  list-style: none;
+  margin-left: -1.25rem;
+  display: block;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge.yes {
+  background: color-mix(in srgb, var(--positive) 18%, transparent);
+  color: var(--positive);
+}
+
+.badge.no {
+  background: color-mix(in srgb, var(--neutral) 18%, transparent);
+  color: var(--neutral);
+}
+
+.badge.error {
+  background: color-mix(in srgb, var(--negative) 18%, transparent);
+  color: var(--negative);
+}
+
+.sentiment-positive {
+  color: var(--positive);
+}
+
+.sentiment-negative {
+  color: var(--negative);
+}
+
+.sentiment-neutral {
+  color: var(--text-secondary);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 2px;
+  display: inline-block;
+}

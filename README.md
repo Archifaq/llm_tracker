@@ -190,6 +190,42 @@ Nothing in the orchestrator, analysis step, or CLI needs to change.
   query x provider; degrades to the heuristic on failure (logged in the
   report as an error, the observation is not lost).
 
+## Web dashboard (web/)
+
+Static HTML/CSS/vanilla JS, no build step, no framework, no CDN scripts --
+`web/index.html` just `fetch()`s `web/data/runs.json` (written by
+`export-web`, see above) at a relative path. Deployable as-is to any static
+host (Cloudflare Pages, GitHub Pages, S3, ...).
+
+- Two date inputs filter which runs feed the trend charts and populate the
+  run picker (default: the latest run in range).
+- Two line charts (hand-drawn inline SVG, no charting library): Share of
+  Voice % and average position over time, one line per provider plus a
+  bold "overall" line. The position chart's y-axis is inverted (1 at the
+  top) since a lower position is better.
+- The selected run's full per-query x provider table, top competitors,
+  absent queries, recommendations and provider errors -- the same content
+  as the text report, in a browsable table.
+- Colors are CSS custom properties re-defined under
+  `prefers-color-scheme: dark`, so it follows the OS/browser theme with no
+  toggle needed.
+
+To preview locally:
+
+```bash
+cd web
+python3 -m http.server 8000
+# open http://localhost:8000
+```
+
+(`fetch()` needs an actual HTTP server -- opening `index.html` directly as
+a `file://` URL will fail on the JSON fetch in most browsers.)
+
+`web/data/runs.json` starts as `[]` in this repo (the dashboard shows an
+empty-state message, not fake data, until the first real run is exported)
+and is meant to be committed after every `export-web` -- see the weekly
+GitHub Actions workflow below.
+
 ## Manual browser-based spot-check (not part of the pipeline)
 
 The brief requires official APIs as the only mechanism in the automated

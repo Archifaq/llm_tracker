@@ -49,23 +49,30 @@
           <select id="run-select"></select>
         </div>
         <div class="control add-query">
-          <a
-            class="btn-accent"
-            href="https://github.com/Archifaq/llm_tracker/edit/main/queries/poland.txt"
-            target="_blank"
-            rel="noopener noreferrer"
-            >+ Добавить вопрос</a
-          >
-          <span class="add-query-hint"
-            >Изменения попадут в дашборд после следующего еженедельного прогона (или запустите его вручную во
-            вкладке Actions)</span
-          >
-        </div>
-        <div class="control add-query">
           <button type="button" id="trigger-run-button" class="btn-accent">Запустить прогон</button>
           <span id="trigger-run-status" class="add-query-hint" aria-live="polite"></span>
         </div>
         <p id="range-summary" class="muted"></p>
+      </section>
+
+      <section class="card">
+        <details id="queries-editor">
+          <summary>Вопросы для отслеживания</summary>
+          <div class="queries-editor-body">
+            <textarea id="queries-textarea" rows="12" placeholder="Загрузка…"></textarea>
+            <div class="queries-editor-actions">
+              <button type="button" id="queries-save-button" class="btn-accent">Сохранить</button>
+              <span id="queries-status" class="add-query-hint" aria-live="polite"></span>
+            </div>
+            <a
+              class="fallback-link"
+              href="https://github.com/Archifaq/llm_tracker/edit/main/queries/poland.txt"
+              target="_blank"
+              rel="noopener noreferrer"
+              >или редактировать на GitHub напрямую</a
+            >
+          </div>
+        </details>
       </section>
 
       <section class="card">

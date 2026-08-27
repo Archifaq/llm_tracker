@@ -507,6 +507,100 @@
     button.textContent = TRIGGER_RUN_DEFAULT_LABEL;
   }
 
+  // ---------- queries editor ----------
+
+  // sha is required by GitHub's Contents API to prove we're overwriting
+  // the version we last read, not silently clobbering someone else's
+  // concurrent edit -- see the 409 handling in handleQueriesSave.
+  const queriesEditorState = { sha: null, loaded: false };
+
+  async function loadQueriesEditor() {
+    const textarea = $("queries-textarea");
+    const status = $("queries-status");
+    status.textContent = "";
+    status.classList.remove("error-text");
+
+    let response;
+    try {
+      response = await fetch("/api/queries", { method: "GET" });
+    } catch {
+      status.textContent = "Не удалось загрузить: сетевая ошибка.";
+      status.classList.add("error-text");
+      return;
+    }
+
+    let data = null;
+    try {
+      data = await response.json();
+    } catch {
+      // handled below via the generic HTTP-status message
+    }
+
+    if (response.ok && data && typeof data.content === "string" && typeof data.sha === "string") {
+      textarea.value = data.content;
+      queriesEditorState.sha = data.sha;
+      queriesEditorState.loaded = true;
+    } else {
+      const message = (data && data.error) || `HTTP ${response.status}`;
+      status.textContent = `Не удалось загрузить: ${message}`;
+      status.classList.add("error-text");
+    }
+  }
+
+  async function handleQueriesSave() {
+    const textarea = $("queries-textarea");
+    const button = $("queries-save-button");
+    const status = $("queries-status");
+
+    if (!queriesEditorState.sha) {
+      status.textContent = "Сначала дождитесь загрузки текущего содержимого файла.";
+      status.classList.add("error-text");
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Сохраняем…";
+    status.textContent = "";
+    status.classList.remove("error-text");
+
+    let response;
+    try {
+      response = await fetch("/api/queries", {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ content: textarea.value, sha: queriesEditorState.sha }),
+      });
+    } catch {
+      status.textContent = "Не удалось сохранить: сетевая ошибка.";
+      status.classList.add("error-text");
+      button.disabled = false;
+      button.textContent = "Сохранить";
+      return;
+    }
+
+    let data = null;
+    try {
+      data = await response.json();
+    } catch {
+      // handled below via the generic HTTP-status message
+    }
+
+    button.disabled = false;
+    button.textContent = "Сохранить";
+
+    if (response.ok && data && data.ok) {
+      if (data.sha) queriesEditorState.sha = data.sha;
+      status.textContent = "Сохранено — изменения попадут в дашборд после следующего прогона.";
+      return;
+    }
+
+    // Textarea content is deliberately left untouched on any failure
+    // (including a 409 conflict) so the user's edits aren't lost.
+    const message = (data && data.error) || `HTTP ${response.status}`;
+    status.textContent = `Не удалось сохранить: ${message}`;
+    status.classList.add("error-text");
+  }
+
   // ---------- boot ----------
 
   function setDateInputBounds(runs) {
@@ -553,6 +647,12 @@
       renderSelectedRun();
     });
     $("trigger-run-button").addEventListener("click", handleTriggerRun);
+    $("queries-save-button").addEventListener("click", handleQueriesSave);
+    $("queries-editor").addEventListener("toggle", () => {
+      if ($("queries-editor").open && !queriesEditorState.loaded) {
+        loadQueriesEditor();
+      }
+    });
 
     applyDateFilter();
 

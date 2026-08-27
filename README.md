@@ -289,8 +289,10 @@ expected until you do this, not a bug):
 1. **Create a fine-grained GitHub PAT**, scoped as narrowly as possible:
    [github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens)
    -> **Generate new token** -> **Repository access**: only `llm_tracker`
-   -> **Permissions**: **Actions** -> **Read and write**, everything else
-   left at "No access". Copy the token value (shown once).
+   -> **Permissions**: **Actions** -> **Read and write** *and* **Contents**
+   -> **Read and write** (the latter is for the "Редактирование вопросов"
+   feature below), everything else left at "No access". Copy the token
+   value (shown once).
 2. **Add it to Cloudflare Pages**: project `llm-tracker` -> **Settings** ->
    **Environment variables** -> add a variable named exactly
    `GITHUB_DISPATCH_TOKEN`, paste the token as its value, and mark it
@@ -304,6 +306,54 @@ in flight, stays disabled for ~60s after a successful dispatch (a simple
 "don't double-click" guard, not real rate limiting -- fine for an internal
 tool), and re-enables immediately with an inline error message (never
 `alert()`, never the raw GitHub response or the token) on failure.
+
+### Редактирование вопросов из интерфейса
+
+The **"Вопросы для отслеживания"** collapsible card (loads lazily on
+first expand) lets you edit `queries/poland.txt` directly from the
+dashboard, through another Pages Function,
+`functions/api/queries.js` -- same repo-root placement rule as
+`trigger-run.js` (see above), same `GITHUB_DISPATCH_TOKEN`, no new
+environment variable.
+
+- `GET /api/queries` reads the file via GitHub's Contents API and returns
+  `{content, sha}`. `PUT /api/queries` writes `{content, sha}` back
+  (base64-encoded internally) with that same `sha`, so GitHub can detect
+  if someone/something else (e.g. a teammate, or `export-web`'s own
+  history commits touching unrelated files) changed the file since you
+  loaded it.
+- **The file path is hardcoded in `queries.js` and never accepted from the
+  client** -- this endpoint can only ever touch `queries/poland.txt`, by
+  design, even though the token it uses now has broader Contents access.
+  Editing a different file needs a new, separate function, not a path
+  parameter added to this one.
+- A stale `sha` (someone else saved in between) gets a GitHub `409`,
+  surfaced verbatim as "Файл изменился, обновите страницу и попробуйте
+  снова" -- no automatic merge is attempted. Any error, including this
+  one, leaves your typed text in the textarea untouched so you don't lose
+  edits.
+- The old "+ Добавить вопрос" GitHub-editor link still works exactly as
+  before; it's now the fallback ("или редактировать на GitHub напрямую")
+  for when this Function is unavailable or you don't have the dashboard
+  open.
+
+**If you already created the PAT for "Запустить прогон" before this
+feature existed**, it only has `Actions: Read and write` -- `PUT
+/api/queries` will fail with a 403 until you add `Contents: Read and
+write` to it too:
+
+- Fine-grained tokens usually let you **edit permissions in place**
+  (open the token on
+  [github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens),
+  add the Contents permission, save) **without changing the token's
+  value** -- if so, nothing else to do, the existing
+  `GITHUB_DISPATCH_TOKEN` in Cloudflare Pages keeps working.
+- If GitHub instead forces a **regenerate** to change permissions (this
+  has varied across GitHub's UI versions), the token value *does*
+  change -- copy the new value and update the `GITHUB_DISPATCH_TOKEN`
+  environment variable in Cloudflare Pages to match, or every request
+  (both this feature and "Запустить прогон") will start failing with
+  401/403 using the old value.
 
 ## Manual browser-based spot-check (not part of the pipeline)
 

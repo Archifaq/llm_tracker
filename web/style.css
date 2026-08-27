@@ -182,13 +182,50 @@ select {
   color: var(--negative);
 }
 
-#trigger-run-button:disabled {
+#trigger-run-button:disabled,
+#queries-save-button:disabled {
   opacity: 0.6;
   cursor: default;
 }
 
 #range-summary {
   margin: 0 0 0 auto;
+}
+
+#queries-editor summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.queries-editor-body {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+#queries-textarea {
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem;
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.queries-editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.fallback-link {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
 }
 
 .charts-grid {

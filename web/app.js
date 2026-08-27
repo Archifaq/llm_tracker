@@ -6,7 +6,22 @@
   "use strict";
 
   const SVG_NS = "http://www.w3.org/2000/svg";
-  const CHART_COLORS = ["--chart-1", "--chart-2", "--chart-3", "--chart-4", "--chart-5", "--chart-6"];
+  // Fixed per-provider colors (not assigned by array index) so a given
+  // provider keeps the same line color across charts/runs regardless of
+  // which other providers are present. Keys must match the exact
+  // `provider` string in run.aggregate.per_provider[].provider. An
+  // unlisted (future) provider falls back to --text-secondary instead of
+  // breaking the render -- see providerSeriesFor.
+  const PROVIDER_COLORS = {
+    openai: "--provider-openai",
+    gemini: "--provider-gemini",
+    perplexity: "--provider-perplexity",
+    claude: "--provider-claude",
+    grok: "--provider-grok",
+    copilot: "--provider-copilot",
+    google_ai_overview: "--provider-google_ai_overview",
+    google_ai_mode: "--provider-google_ai_mode",
+  };
 
   const state = {
     runs: [], // sorted ascending by timestamp
@@ -110,13 +125,18 @@
     const sortedProviders = Array.from(providerNames).sort();
     const names = [...sortedProviders, "overall"];
 
-    return names.map((name, index) => {
+    return names.map((name) => {
       const points = runs.map((run) => {
         const stats =
           name === "overall" ? run.aggregate.overall : run.aggregate.per_provider.find((p) => p.provider === name);
         return { x: new Date(run.timestamp), y: stats ? stats[metricKey] : null };
       });
-      const color = name === "overall" ? "var(--chart-overall)" : `var(${CHART_COLORS[index % CHART_COLORS.length]})`;
+      const color =
+        name === "overall"
+          ? "var(--chart-overall)"
+          : PROVIDER_COLORS[name]
+            ? `var(${PROVIDER_COLORS[name]})`
+            : "var(--text-secondary)";
       return { name, points, color, bold: name === "overall" };
     });
   }

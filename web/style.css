@@ -1,44 +1,48 @@
 :root {
-  --bg: #ffffff;
-  --bg-secondary: #f4f5f7;
-  --card-bg: #ffffff;
-  --text: #16181d;
-  --text-secondary: #5b6270;
-  --border: #e2e4e8;
-  --stripe: #fafbfc;
-  --accent: #2563eb;
-  --positive: #15803d;
-  --negative: #b91c1c;
-  --neutral: #6b7280;
-  --chart-1: #2563eb;
-  --chart-2: #f59e0b;
-  --chart-3: #16a34a;
-  --chart-4: #db2777;
-  --chart-5: #7c3aed;
-  --chart-6: #0891b2;
-  --chart-overall: #111827;
+  --bg: #f9f9f7;
+  --bg-secondary: #f9f9f7;
+  --card-bg: #fcfcfb;
+  --text: #0b0b0b;
+  --text-secondary: #52514e;
+  --border: #e1e0d9;
+  --stripe: #f9f9f7;
+  --accent: #eb6834;
+  --positive: #0ca30c;
+  --negative: #d03b3b;
+  --neutral: #898781;
+  --chart-overall: var(--text);
+  --provider-openai: #2a78d6;
+  --provider-gemini: #eb6834;
+  --provider-perplexity: #1baf7a;
+  --provider-claude: #eda100;
+  --provider-grok: #e87ba4;
+  --provider-copilot: #008300;
+  --provider-google_ai_overview: #4a3aa7;
+  --provider-google_ai_mode: #e34948;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f1115;
-    --bg-secondary: #171a21;
-    --card-bg: #171a21;
-    --text: #e6e8eb;
-    --text-secondary: #9aa1ac;
-    --border: #2a2e37;
-    --stripe: #1b1f27;
-    --accent: #60a5fa;
-    --positive: #4ade80;
-    --negative: #f87171;
-    --neutral: #9aa1ac;
-    --chart-1: #60a5fa;
-    --chart-2: #fbbf24;
-    --chart-3: #4ade80;
-    --chart-4: #f472b6;
-    --chart-5: #a78bfa;
-    --chart-6: #22d3ee;
-    --chart-overall: #e6e8eb;
+    --bg: #0d0d0d;
+    --bg-secondary: #0d0d0d;
+    --card-bg: #1a1a19;
+    --text: #ffffff;
+    --text-secondary: #c3c2b7;
+    --border: #2c2c2a;
+    --stripe: #0d0d0d;
+    --accent: #d95926;
+    --positive: #0ca30c;
+    --negative: #e66767;
+    --neutral: #898781;
+    --chart-overall: var(--text);
+    --provider-openai: #3987e5;
+    --provider-gemini: #d95926;
+    --provider-perplexity: #199e70;
+    --provider-claude: #c98500;
+    --provider-grok: #d55181;
+    --provider-copilot: #008300;
+    --provider-google_ai_overview: #9085e9;
+    --provider-google_ai_mode: #e66767;
   }
 }
 
@@ -50,7 +54,8 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    system-ui, sans-serif;
   line-height: 1.5;
 }
 
@@ -76,11 +81,13 @@ main#app {
 
 h1 {
   font-size: 1.4rem;
+  font-weight: 600;
   margin: 0 0 0.25rem;
 }
 
 h2 {
   font-size: 1.1rem;
+  font-weight: 600;
   margin: 0 0 0.75rem;
 }
 
@@ -186,6 +193,8 @@ select {
 }
 
 .stat-tile .value {
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
   font-size: 1.4rem;
   font-weight: 600;
 }
@@ -220,6 +229,16 @@ th.wrap {
 
 tbody tr:nth-child(even) {
   background: var(--stripe);
+}
+
+/* Numeric columns only -- rank/count/position -- so prose columns (query,
+   context, competitor names) keep the more readable proportional font. */
+#competitors-table td:nth-child(1),
+#competitors-table td:nth-child(3),
+#competitors-table td:nth-child(4),
+#observations-table td:nth-child(4) {
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 .plain-list {

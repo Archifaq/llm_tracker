@@ -319,6 +319,281 @@
     $("chart-empty").hidden = sovOk || posOk;
   }
 
+  // ---------- breakdown charts (by provider / by query / by competitor) ----------
+
+  // Fixed, reproducible illustrative numbers -- NOT random, NOT derived
+  // from any real run -- shown only while isDemo is true (see
+  // renderBreakdownCharts) so stakeholders can see the intended shape of
+  // these charts before any provider API key is wired up. Every one of
+  // these charts is preceded by a visible "ДЕМО" banner; the moment a run
+  // has at least one successful observation, this data is never touched
+  // again -- real numbers take over immediately, however sparse.
+  const DEMO_PROVIDER_BREAKDOWN = [
+    { label: "claude", pct: 60 },
+    { label: "perplexity", pct: 52 },
+    { label: "openai", pct: 45 },
+    { label: "gemini", pct: 38 },
+  ];
+
+  const DEMO_QUERY_BREAKDOWN = [
+    { label: "Jakie są najlepsze karty paliwowe dla firm w Polsce?", pct: 72 },
+    { label: "Ranking kart paliwowych dla firm 2026", pct: 68 },
+    { label: "Porównanie kart paliwowych dostępnych na polskim rynku", pct: 64 },
+    { label: "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?", pct: 58 },
+    { label: "Opinie o kartach paliwowych dla firm – co wybrać?", pct: 55 },
+    { label: "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce", pct: 50 },
+    { label: "Karta paliwowa dla dużej floty samochodów dostawczych", pct: 47 },
+    { label: "Polecane karty flotowe dla małej firmy transportowej", pct: 44 },
+    { label: "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)", pct: 41 },
+    { label: "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji", pct: 38 },
+    { label: "Jak wybrać kartę paliwową dla floty pojazdów?", pct: 35 },
+    { label: "Karta flotowa z rabatem na paliwo dla firm transportowych", pct: 32 },
+    { label: "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?", pct: 29 },
+    { label: "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków", pct: 26 },
+    { label: "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?", pct: 23 },
+    { label: "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice", pct: 20 },
+    { label: "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?", pct: 17 },
+    { label: "Karty paliwowe bez limitu kredytowego dla firm", pct: 14 },
+  ];
+
+  const DEMO_COMPETITOR_BREAKDOWN = [
+    { label: "E100", pct: 30, isE100: true },
+    { label: "DKV", pct: 27, isE100: false },
+    { label: "Shell", pct: 20, isE100: false },
+    { label: "UTA", pct: 14, isE100: false },
+    { label: "Orlen", pct: 9, isE100: false },
+  ];
+
+  const DEMO_BANNER_TEXT = "ДЕМО — так будет выглядеть после подключения API";
+
+  function providerColorVar(name) {
+    return PROVIDER_COLORS[name] ? `var(${PROVIDER_COLORS[name]})` : "var(--text-secondary)";
+  }
+
+  function computeProviderBreakdown(agg) {
+    return agg.per_provider
+      .filter((p) => p.successful_queries > 0)
+      .map((p) => ({ label: p.provider, pct: p.share_of_voice_pct, color: providerColorVar(p.provider) }));
+  }
+
+  function computeQueryBreakdown(run) {
+    const byQuery = new Map();
+    run.observations.forEach((o) => {
+      if (o.fetch_error) return; // not a successful observation for this metric
+      if (!byQuery.has(o.query)) byQuery.set(o.query, { total: 0, mentioned: 0 });
+      const entry = byQuery.get(o.query);
+      entry.total += 1;
+      if (o.mentioned) entry.mentioned += 1;
+    });
+    const items = [];
+    byQuery.forEach((v, query) => {
+      if (v.total === 0) return;
+      items.push({ label: query, pct: (v.mentioned / v.total) * 100 });
+    });
+    items.sort((a, b) => b.pct - a.pct);
+    return items;
+  }
+
+  function computeCompetitorBreakdown(agg) {
+    const e100Count = agg.overall.mentioned_count;
+    const total = e100Count + agg.top_competitors.reduce((sum, c) => sum + c.frequency, 0);
+    if (total <= 0) return [];
+    const items = [{ label: "E100", pct: (e100Count / total) * 100, isE100: true }];
+    agg.top_competitors.forEach((c) => {
+      items.push({ label: c.name, pct: (c.frequency / total) * 100, isE100: false });
+    });
+    return items;
+  }
+
+  function renderDemoBanner(container) {
+    const banner = document.createElement("div");
+    banner.className = "demo-banner";
+    banner.textContent = DEMO_BANNER_TEXT;
+    container.appendChild(banner);
+  }
+
+  function renderBarList(container, bars, { isDemo = false } = {}) {
+    container.innerHTML = "";
+    if (isDemo) renderDemoBanner(container);
+
+    if (bars.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "muted";
+      empty.textContent = "Недостаточно данных для графика.";
+      container.appendChild(empty);
+      return;
+    }
+
+    const width = 640;
+    const rowH = 34;
+    const margin = { top: 6, left: 8, right: 8 };
+    const trackW = width - margin.left - margin.right;
+    const height = margin.top + bars.length * rowH;
+
+    const svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("role", "img");
+
+    bars.forEach((bar, i) => {
+      const rowY = margin.top + i * rowH;
+
+      const labelText = document.createElementNS(SVG_NS, "text");
+      labelText.setAttribute("x", margin.left);
+      labelText.setAttribute("y", rowY + 10);
+      labelText.setAttribute("font-size", "11");
+      labelText.setAttribute("fill", "var(--text)");
+      const truncated = bar.label.length > 70 ? `${bar.label.slice(0, 68)}…` : bar.label;
+      labelText.textContent = truncated;
+      if (truncated !== bar.label) {
+        const title = document.createElementNS(SVG_NS, "title");
+        title.textContent = bar.label;
+        labelText.appendChild(title);
+      }
+      svg.appendChild(labelText);
+
+      const barY = rowY + 16;
+      const barH = 12;
+      const track = document.createElementNS(SVG_NS, "rect");
+      track.setAttribute("x", margin.left);
+      track.setAttribute("y", barY);
+      track.setAttribute("width", trackW);
+      track.setAttribute("height", barH);
+      track.setAttribute("rx", 3);
+      track.setAttribute("fill", "var(--border)");
+      svg.appendChild(track);
+
+      const pct = Math.max(0, Math.min(100, bar.pct));
+      const fillW = (pct / 100) * trackW;
+      const fill = document.createElementNS(SVG_NS, "rect");
+      fill.setAttribute("x", margin.left);
+      fill.setAttribute("y", barY);
+      fill.setAttribute("width", fillW);
+      fill.setAttribute("height", barH);
+      fill.setAttribute("rx", 3);
+      fill.setAttribute("fill", bar.color || "var(--accent)");
+      svg.appendChild(fill);
+
+      const valueText = document.createElementNS(SVG_NS, "text");
+      valueText.setAttribute("y", barY + barH - 2);
+      valueText.setAttribute("font-size", "10");
+      valueText.setAttribute("font-weight", "600");
+      const insideLabel = pct >= 85;
+      if (insideLabel) {
+        valueText.setAttribute("x", margin.left + fillW - 4);
+        valueText.setAttribute("text-anchor", "end");
+        valueText.setAttribute("fill", "#ffffff");
+      } else {
+        valueText.setAttribute("x", margin.left + fillW + 4);
+        valueText.setAttribute("text-anchor", "start");
+        valueText.setAttribute("fill", "var(--text)");
+      }
+      valueText.textContent = `${pct.toFixed(0)}%`;
+      svg.appendChild(valueText);
+    });
+
+    container.appendChild(svg);
+  }
+
+  function renderDonut(container, segments, { isDemo = false } = {}) {
+    container.innerHTML = "";
+    if (isDemo) renderDemoBanner(container);
+
+    if (segments.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "muted";
+      empty.textContent = "Недостаточно данных для графика.";
+      container.appendChild(empty);
+      return;
+    }
+
+    const size = 320;
+    const cx = size / 2;
+    const cy = size / 2;
+    const r = 90;
+    const strokeW = 36;
+    const circumference = 2 * Math.PI * r;
+
+    const svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+    svg.setAttribute("role", "img");
+
+    const ring = document.createElementNS(SVG_NS, "g");
+    ring.setAttribute("transform", `rotate(-90 ${cx} ${cy})`);
+
+    let cumulative = 0;
+    const labels = [];
+    segments.forEach((seg) => {
+      const segLen = (seg.pct / 100) * circumference;
+      const circle = document.createElementNS(SVG_NS, "circle");
+      circle.setAttribute("cx", cx);
+      circle.setAttribute("cy", cy);
+      circle.setAttribute("r", r);
+      circle.setAttribute("fill", "none");
+      circle.setAttribute("stroke", seg.color);
+      circle.setAttribute("stroke-width", strokeW);
+      circle.setAttribute("stroke-dasharray", `${segLen} ${circumference - segLen}`);
+      circle.setAttribute("stroke-dashoffset", `${-cumulative}`);
+      ring.appendChild(circle);
+
+      const midAngleDeg = ((cumulative + segLen / 2) / circumference) * 360 - 90;
+      const labelR = r + strokeW / 2 + 16;
+      const rad = (midAngleDeg * Math.PI) / 180;
+      labels.push({
+        x: cx + labelR * Math.cos(rad),
+        y: cy + labelR * Math.sin(rad),
+        text: `${seg.label} ${seg.pct.toFixed(0)}%`,
+        color: seg.color,
+        angleDeg: midAngleDeg,
+      });
+
+      cumulative += segLen;
+    });
+
+    svg.appendChild(ring);
+
+    labels.forEach((l) => {
+      const normalized = ((l.angleDeg % 360) + 360) % 360;
+      const text = document.createElementNS(SVG_NS, "text");
+      text.setAttribute("x", l.x);
+      text.setAttribute("y", l.y);
+      text.setAttribute("font-size", "11");
+      text.setAttribute("font-weight", "600");
+      text.setAttribute("fill", l.color);
+      text.setAttribute("text-anchor", normalized > 90 && normalized < 270 ? "end" : "start");
+      text.setAttribute("dominant-baseline", "middle");
+      text.textContent = l.text;
+      svg.appendChild(text);
+    });
+
+    container.appendChild(svg);
+  }
+
+  function renderBreakdownCharts(run) {
+    const isDemo = run.aggregate.overall.successful_queries === 0;
+
+    if (isDemo) {
+      renderBarList($("chart-by-provider"), DEMO_PROVIDER_BREAKDOWN.map((p) => ({ ...p, color: providerColorVar(p.label) })), { isDemo: true });
+      renderBarList($("chart-by-query"), DEMO_QUERY_BREAKDOWN.map((q) => ({ ...q, color: "var(--accent)" })), { isDemo: true });
+      renderDonut(
+        $("chart-competitors-share"),
+        DEMO_COMPETITOR_BREAKDOWN.map((c) => ({ ...c, color: c.isE100 ? "var(--accent)" : "var(--text-secondary)" })),
+        { isDemo: true }
+      );
+      return;
+    }
+
+    const agg = run.aggregate;
+    renderBarList($("chart-by-provider"), computeProviderBreakdown(agg));
+    renderBarList(
+      $("chart-by-query"),
+      computeQueryBreakdown(run).map((q) => ({ ...q, color: "var(--accent)" }))
+    );
+    renderDonut(
+      $("chart-competitors-share"),
+      computeCompetitorBreakdown(agg).map((c) => ({ ...c, color: c.isE100 ? "var(--accent)" : "var(--text-secondary)" }))
+    );
+  }
+
   // ---------- run detail ----------
 
   function renderErrorGroups(container, agg) {
@@ -377,6 +652,9 @@
     recommendationsList.innerHTML = "";
     errorsList.innerHTML = "";
     observationsBody.innerHTML = "";
+    $("chart-by-provider").innerHTML = "";
+    $("chart-by-query").innerHTML = "";
+    $("chart-competitors-share").innerHTML = "";
 
     if (!run) {
       heading.textContent = "Выбранный прогон";
@@ -385,6 +663,7 @@
 
     heading.textContent = `Прогон #${run.run_id} — ${fmtDate(run.timestamp)}`;
     const agg = run.aggregate;
+    renderBreakdownCharts(run);
 
     const tiles = [
       ["Share of Voice (среднее)", fmtPct(agg.overall.share_of_voice_pct)],

@@ -10,6 +10,7 @@
   --positive: #0ca30c;
   --negative: #d03b3b;
   --neutral: #898781;
+  --warning: #8a6d00;
   --chart-overall: var(--text);
   --provider-openai: #2a78d6;
   --provider-gemini: #eb6834;
@@ -34,6 +35,7 @@
     --positive: #0ca30c;
     --negative: #e66767;
     --neutral: #898781;
+    --warning: #e3b341;
     --chart-overall: var(--text);
     --provider-openai: #3987e5;
     --provider-gemini: #d95926;
@@ -228,14 +230,20 @@ select {
   color: var(--text-secondary);
 }
 
-.charts-grid {
+.charts-grid,
+.breakdown-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 }
 
+.breakdown-grid {
+  margin-bottom: 1.25rem;
+}
+
 @media (max-width: 720px) {
-  .charts-grid {
+  .charts-grid,
+  .breakdown-grid {
     grid-template-columns: 1fr;
   }
   #range-summary {
@@ -252,6 +260,18 @@ select {
   width: 100%;
   height: auto;
   min-width: 320px;
+}
+
+.demo-banner {
+  display: inline-block;
+  background: color-mix(in srgb, var(--warning) 18%, transparent);
+  color: var(--warning);
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .stat-grid {

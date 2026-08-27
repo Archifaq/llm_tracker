@@ -253,6 +253,33 @@ empty-state message, not fake data, until the first real run is exported)
 and is meant to be committed after every `export-web` -- see the weekly
 GitHub Actions workflow below.
 
+### Breakdown charts (by provider / by query / by competitor)
+
+Three more hand-drawn SVG charts for the selected run, below the top
+competitors table: E100's share of voice by provider (bar), by individual
+query (bar, sorted descending), and E100 vs. top competitors as a share of
+all brand mentions in the run (donut).
+
+- `isDemo = run.aggregate.overall.successful_queries === 0` (true right
+  now, since no provider is wired up with a key yet) switches all three to
+  a fixed, hardcoded, clearly-labeled demo dataset -- never random, never
+  silently mixed with real numbers. Each demo chart carries a `--warning`
+  colored "ДЕМО" banner. The instant any run has at least one successful
+  observation, real numbers take over automatically and permanently for
+  that run -- there's no partial-demo/partial-real state.
+- Real-data formulas: **by provider** = each provider's own
+  `share_of_voice_pct` (providers with zero successful queries this run
+  are omitted, not shown at 0%); **by query** = share of successfully-
+  answering providers that mentioned E100, per query; **by competitor** =
+  each of `agg.top_competitors` plus E100's own `mentioned_count`,
+  normalized to % of all brand mentions in the run.
+- Provider bars reuse the fixed `--provider-*` colors from the trend
+  charts. Competitors intentionally do **not** get per-competitor color
+  identity (this is a one-off snapshot, not something tracked run over
+  run like providers are): E100 is `--accent`, every competitor is the
+  same muted `--text-secondary`, disambiguated by their on-chart label
+  instead of color.
+
 ### Errors, compactly
 
 The dashboard groups `Ошибки провайдеров` by provider instead of one line

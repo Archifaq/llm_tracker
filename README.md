@@ -257,3 +257,30 @@ API keys are read from environment variables named by
 hardcoded, never logged: provider adapters only reference
 `os.environ[...]`, and errors are truncated to the response body, never the
 request headers.
+
+## Scheduled runs (GitHub Actions)
+
+`.github/workflows/weekly-run.yml` runs the pipeline automatically every
+Monday at 06:00 UTC (a comment in the file points at the one line to edit
+for a different schedule) and commits the updated history back to the
+repo -- Actions runners are ephemeral, so this is how the history survives
+between runs instead of a local disk.
+
+Setup, one-time:
+
+1. In the repo's GitHub settings: **Settings -> Secrets and variables ->
+   Actions -> New repository secret**, add `OPENAI_API_KEY`,
+   `GEMINI_API_KEY`, `PERPLEXITY_API_KEY`.
+2. That's it -- the workflow reads `config.ci.toml` (committed, see above),
+   which already names these exact variables.
+
+Steps: checkout -> install -> `e100-visibility run --config config.ci.toml`
+-> `e100-visibility export-web --config config.ci.toml --out web/data` ->
+commit `data/history.sqlite3` + `web/data/runs.json` as `github-actions[bot]`
+and push to `main`. If one provider fails that week, the job still succeeds
+(the pipeline itself isolates provider errors -- see `fetch.py`); the
+failure is visible in that step's log output and in the run's
+"Ошибки провайдеров" section in both the report and the dashboard.
+
+You can also trigger it by hand from the Actions tab (`workflow_dispatch`)
+to test it without waiting for Monday.

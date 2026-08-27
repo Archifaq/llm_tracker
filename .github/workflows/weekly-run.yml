@@ -1,0 +1,64 @@
+name: Weekly E100 visibility run
+
+on:
+  schedule:
+    # Every Monday at 06:00 UTC. Cron fields: minute hour day-of-month month
+    # day-of-week -- change the expression below to adjust the schedule
+    # (https://crontab.guru is handy for this). GitHub Actions cron runs in
+    # UTC regardless of where the repo/org is based.
+    - cron: "0 6 * * 1"
+  # Lets you trigger a run by hand from the Actions tab, e.g. to test the
+  # workflow without waiting for Monday.
+  workflow_dispatch: {}
+
+permissions:
+  contents: write # required to commit data/history.sqlite3 + web/data/runs.json back to the repo
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Run visibility pipeline
+        env:
+          # Set these under Settings -> Secrets and variables -> Actions in
+          # this repo. The CLI reads them straight from the environment
+          # (config.ci.toml just names the variables via api_key_env) --
+          # no .env file needed in CI.
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+        run: e100-visibility run --config config.ci.toml
+        # A single provider failing (missing/invalid key, rate limit,
+        # outage) is caught and recorded as an error observation by the
+        # pipeline itself (see src/e100_visibility/fetch.py) -- it does not
+        # raise, so this step still exits 0 and the job continues even if
+        # e.g. only Perplexity is down this week. The error message is
+        # still printed to this step's log (the CLI logs provider errors to
+        # stderr) and ends up in the run's "Ошибки провайдеров" section in
+        # both the text report and web/data/runs.json.
+
+      - name: Export web dashboard data
+        run: e100-visibility export-web --config config.ci.toml --out web/data
+
+      - name: Commit updated history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/history.sqlite3 web/data/runs.json
+          if git diff --cached --quiet; then
+            echo "no changes to commit (identical to the previous run's data)"
+          else
+            git commit -m "chore: weekly E100 visibility run ($(date -u +%Y-%m-%d))"
+            git push
+          fi

@@ -78,6 +78,20 @@ class AppConfig:
         return tuple(p for p in self.providers if p.enabled)
 
 
+def _load_queries_file(path: Path) -> tuple[str, ...]:
+    """One query per line; blank lines and lines starting with '#' are
+    comments and are skipped. Lets the query pool be edited (e.g. via the
+    GitHub web editor) without touching the TOML config at all.
+    """
+    queries = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        queries.append(stripped)
+    return tuple(queries)
+
+
 def load_config(path: str | Path) -> AppConfig:
     path = Path(path)
     if not path.exists():
@@ -130,9 +144,23 @@ def load_config(path: str | Path) -> AppConfig:
         storage = StorageConfig(path=raw.get("storage", {}).get("path", "output/history.sqlite3"))
         report = ReportConfig(output_dir=raw.get("report", {}).get("output_dir", "output"))
 
-        queries = tuple(raw.get("queries", []))
+        queries_file = raw.get("queries_file")
+        if queries_file:
+            # queries_file takes priority over an inline `queries` array when
+            # both are present -- the inline array is only a fallback for
+            # configs (like config.example.toml) that don't use a file.
+            queries_path = path.parent / queries_file
+            if not queries_path.exists():
+                raise ConfigError(f"queries_file not found: {queries_path}")
+            queries = _load_queries_file(queries_path)
+        else:
+            queries = tuple(raw.get("queries", []))
+
         if not queries:
-            raise ConfigError("config must define a non-empty top-level 'queries' array")
+            raise ConfigError(
+                "config must define queries via a non-empty 'queries_file' or a non-empty "
+                "top-level 'queries' array"
+            )
         if not providers:
             raise ConfigError("config must define at least one [[providers]] entry")
 

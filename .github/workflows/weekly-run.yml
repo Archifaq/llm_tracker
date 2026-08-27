@@ -9,7 +9,12 @@ on:
     - cron: "0 6 * * 1"
   # Lets you trigger a run by hand from the Actions tab, e.g. to test the
   # workflow without waiting for Monday.
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      extra_query:
+        description: "One-off test query for this run only (not saved to queries/poland.txt)"
+        required: false
+        type: string
 
 permissions:
   contents: write # required to commit data/history.sqlite3 + web/data/runs.json back to the repo
@@ -39,7 +44,13 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: e100-visibility run --config config.ci.toml
+          EXTRA_QUERY: ${{ github.event.inputs.extra_query }}
+        run: |
+          if [ -n "$EXTRA_QUERY" ]; then
+            e100-visibility run --config config.ci.toml --extra-query "$EXTRA_QUERY"
+          else
+            e100-visibility run --config config.ci.toml
+          fi
         # A single provider failing (missing/invalid key, rate limit,
         # outage) is caught and recorded as an error observation by the
         # pipeline itself (see src/e100_visibility/fetch.py) -- it does not

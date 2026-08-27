@@ -128,6 +128,33 @@ it -- language/market is a config parameter, not a code branch.
 `[[competitors]]` table header -- in TOML, a bare array after a table header
 belongs to that table, not to the document root.
 
+### Managing the query pool
+
+Two ways to define `queries`, chosen per config file:
+
+- **Inline array** (`config.example.toml`) -- `queries = ["...", "..."]`
+  directly in the TOML. Simplest for a one-off local config.
+- **`queries_file`** (`config.ci.toml` -> `queries/poland.txt`) -- a path
+  (relative to that config file) to a plain text file, one query per line;
+  blank lines and lines starting with `#` are ignored as comments. Lets the
+  pool be edited on its own -- including via GitHub's in-browser file
+  editor, which is exactly what the dashboard's **"+ Добавить вопрос"**
+  button links to (`.../edit/main/queries/poland.txt`) -- without touching
+  any TOML. If a config sets both, `queries_file` wins; the inline array is
+  only a fallback for configs that don't use a file. Either way, an empty
+  result (empty file, or neither key set) raises a `ConfigError` -- there's
+  always at least one query.
+
+Edits to `queries/poland.txt` take effect on the *next* run -- either the
+next scheduled Monday, or triggered immediately from the repo's **Actions**
+tab (`weekly-run.yml` -> **Run workflow**).
+
+**One-off test query, without editing the file:** `e100-visibility run
+--config config.ci.toml --extra-query "some question"` appends that single
+query for this run only -- it's never written to `queries_file`/`queries`.
+The same thing is exposed as the workflow's manual-trigger input: **Actions**
+-> **Weekly E100 visibility run** -> **Run workflow** -> `extra_query` field.
+
 ### Web search
 
 The OpenAI and Gemini adapters always request web search, so their answers

@@ -1,0 +1,27 @@
+# Query pool for the Polish "karty paliwowe dla firm" (business fuel cards)
+# topic, used by config.ci.toml via `queries_file`. One query per line;
+# blank lines and lines starting with # are ignored. Deliberately does not
+# mention E100 by name, so as not to bias the models' answers.
+#
+# To add a query: edit this file directly (e.g. via the GitHub web editor --
+# see the "Добавить вопрос" link on the dashboard) and either wait for the
+# next weekly run or trigger one by hand from the Actions tab.
+
+Jakie są najlepsze karty paliwowe dla firm w Polsce?
+Polecane karty flotowe dla małej firmy transportowej
+Ranking kart paliwowych dla firm 2026
+Jak wybrać kartę paliwową dla floty pojazdów?
+Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?
+Karty paliwowe bez limitu kredytowego dla firm
+Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)
+Karty paliwowe z aplikacją mobilną i raportowaniem wydatków
+Porównanie kart paliwowych dostępnych na polskim rynku
+Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?
+Karta paliwowa dla dużej floty samochodów dostawczych
+Jakie firmy oferują karty paliwowe dla biznesu w Polsce?
+Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji
+Opinie o kartach paliwowych dla firm – co wybrać?
+Karta flotowa z rabatem na paliwo dla firm transportowych
+Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?
+Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice
+Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce

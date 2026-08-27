@@ -22,6 +22,24 @@ model = "gpt-4o"
 api_key_env = "OPENAI_API_KEY"
 """
 
+MINIMAL_CONFIG_WITH_QUERIES_FILE = """
+queries_file = "queries.txt"
+
+[market]
+language = "pl"
+country = "PL"
+
+[brand]
+name = "E100"
+domain = "e100.eu"
+aliases = ["E100", "e100.eu"]
+
+[[providers]]
+name = "openai"
+model = "gpt-4o"
+api_key_env = "OPENAI_API_KEY"
+"""
+
 
 def _write(tmp_dir: str, content: str) -> Path:
     path = Path(tmp_dir) / "config.toml"
@@ -73,6 +91,63 @@ enabled = false
 
         self.assertEqual(len(config.providers), 2)
         self.assertEqual([p.name for p in config.enabled_providers()], ["openai"])
+
+
+class QueriesFileTests(unittest.TestCase):
+    def test_loads_queries_from_file_skipping_comments_and_blank_lines(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            (Path(tmp_dir) / "queries.txt").write_text(
+                "# comment\n\nQuery A\n   \nQuery B\n# another comment\nQuery C\n"
+            )
+            path = _write(tmp_dir, MINIMAL_CONFIG_WITH_QUERIES_FILE)
+            config = load_config(path)
+
+        self.assertEqual(config.queries, ("Query A", "Query B", "Query C"))
+
+    def test_queries_file_takes_priority_over_inline_queries(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            (Path(tmp_dir) / "queries.txt").write_text("File query\n")
+            content = MINIMAL_CONFIG_WITH_QUERIES_FILE.replace(
+                'queries_file = "queries.txt"',
+                'queries_file = "queries.txt"\nqueries = ["Inline query"]',
+            )
+            path = _write(tmp_dir, content)
+            config = load_config(path)
+
+        self.assertEqual(config.queries, ("File query",))
+
+    def test_queries_file_path_is_relative_to_the_config_file(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            sub_dir = Path(tmp_dir) / "sub"
+            sub_dir.mkdir()
+            (sub_dir / "queries.txt").write_text("Nested query\n")
+            content = MINIMAL_CONFIG_WITH_QUERIES_FILE.replace(
+                'queries_file = "queries.txt"', 'queries_file = "sub/queries.txt"'
+            )
+            path = _write(tmp_dir, content)
+            config = load_config(path)
+
+        self.assertEqual(config.queries, ("Nested query",))
+
+    def test_missing_queries_file_raises_config_error(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = _write(tmp_dir, MINIMAL_CONFIG_WITH_QUERIES_FILE)  # queries.txt never created
+            with self.assertRaises(ConfigError):
+                load_config(path)
+
+    def test_empty_queries_file_raises_config_error(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            (Path(tmp_dir) / "queries.txt").write_text("# only comments\n\n   \n")
+            path = _write(tmp_dir, MINIMAL_CONFIG_WITH_QUERIES_FILE)
+            with self.assertRaises(ConfigError):
+                load_config(path)
+
+    def test_neither_queries_nor_queries_file_raises_config_error(self):
+        content = MINIMAL_CONFIG.replace('queries = ["query one", "query two"]', "")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = _write(tmp_dir, content)
+            with self.assertRaises(ConfigError):
+                load_config(path)
 
 
 if __name__ == "__main__":

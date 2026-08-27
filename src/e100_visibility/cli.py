@@ -141,6 +141,10 @@ def cmd_run(args: argparse.Namespace) -> int:
         return 1
 
     config = _select_providers(config, args.providers)
+    if getattr(args, "extra_query", None):
+        # One-off ad-hoc query for this run only -- never written to
+        # queries_file/queries, so it doesn't persist between runs.
+        config = replace(config, queries=config.queries + (args.extra_query,))
     if not config.enabled_providers():
         print("no enabled providers to query (check --providers / config.toml)", file=sys.stderr)
         return 1
@@ -231,6 +235,11 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--out", default=None, help="override [report] output_dir from config")
     run_parser.add_argument(
         "--providers", nargs="*", default=None, help="restrict this run to these provider names (config-defined)"
+    )
+    run_parser.add_argument(
+        "--extra-query",
+        default=None,
+        help="run one additional ad-hoc query for this run only (not saved to queries_file/queries)",
     )
     run_parser.set_defaults(func=cmd_run)
 

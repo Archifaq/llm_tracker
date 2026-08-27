@@ -13,29 +13,13 @@
 # config.toml (copied from config.example.toml, gitignored) so a developer's
 # own test runs don't pollute the committed history.
 #
-# NOTE: keep `queries` above the first `[[providers]]`/`[[competitors]]`
-# table header -- see config.example.toml for why.
-
-queries = [
-  "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
-  "Polecane karty flotowe dla małej firmy transportowej",
-  "Ranking kart paliwowych dla firm 2026",
-  "Jak wybrać kartę paliwową dla floty pojazdów?",
-  "Karta paliwowa dla jednoosobowej działalności gospodarczej – co polecacie?",
-  "Karty paliwowe bez limitu kredytowego dla firm",
-  "Najlepsza karta paliwowa dla przewoźników międzynarodowych (tankowanie w całej Europie)",
-  "Karty paliwowe z aplikacją mobilną i raportowaniem wydatków",
-  "Porównanie kart paliwowych dostępnych na polskim rynku",
-  "Ile kosztuje karta paliwowa dla firmy i jakie są opłaty?",
-  "Karta paliwowa dla dużej floty samochodów dostawczych",
-  "Jakie firmy oferują karty paliwowe dla biznesu w Polsce?",
-  "Karty paliwowe umożliwiające tankowanie na wielu sieciach stacji",
-  "Opinie o kartach paliwowych dla firm – co wybrać?",
-  "Karta flotowa z rabatem na paliwo dla firm transportowych",
-  "Jak zarządzać wydatkami na paliwo w firmie – jakie narzędzia/karty pomagają?",
-  "Karta paliwowa dla firmy jednoosobowej vs dla dużej floty – różnice",
-  "Najlepsze rozwiązania płatnicze dla flot samochodowych w Polsce",
-]
+# Query pool lives in queries/poland.txt (one query per line, '#'
+# comments/blank lines ignored) instead of inline here -- edit that file
+# directly (e.g. via the GitHub web editor, see the "Добавить вопрос" link
+# on the dashboard) without touching this TOML at all. Path is relative to
+# this config file. Takes priority over an inline `queries = [...]` array
+# if both were present (see config.example.toml for the inline form).
+queries_file = "queries/poland.txt"
 
 [market]
 language = "pl"

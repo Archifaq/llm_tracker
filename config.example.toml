@@ -11,6 +11,15 @@
 # Query pool for the Polish "karty paliwowe dla firm" (business fuel cards)
 # topic. Deliberately does not mention E100 by name, so as not to bias the
 # models' answers.
+#
+# Two ways to define the query pool -- pick one:
+#   1. Inline array (below) -- simplest for a one-off local config.
+#   2. `queries_file = "path/relative/to/this/config.toml"` -- one query per
+#      line, blank lines and lines starting with '#' ignored as comments.
+#      Lets the pool be edited on its own (e.g. via the GitHub web editor)
+#      without touching this TOML file. If both are set, `queries_file`
+#      wins and the inline array below is ignored. See config.ci.toml +
+#      queries/poland.txt for a real example of the file-based form.
 queries = [
   "Jakie są najlepsze karty paliwowe dla firm w Polsce?",
   "Polecane karty flotowe dla małej firmy transportowej",

@@ -178,6 +178,15 @@ select {
   color: var(--text-secondary);
 }
 
+.add-query-hint.error-text {
+  color: var(--negative);
+}
+
+#trigger-run-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
 #range-summary {
   margin: 0 0 0 auto;
 }
@@ -304,6 +313,33 @@ tbody tr:nth-child(even) {
 .badge.error {
   background: color-mix(in srgb, var(--negative) 18%, transparent);
   color: var(--negative);
+}
+
+.badge.neutral {
+  background: color-mix(in srgb, var(--neutral) 18%, transparent);
+  color: var(--neutral);
+  cursor: default;
+}
+
+#errors-list summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#errors-list summary .muted {
+  font-size: 0.82rem;
+}
+
+.nested-error-log {
+  margin-top: 0.4rem;
+  padding-left: 1.5rem;
+  max-height: 12rem;
+  overflow-y: auto;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
 }
 
 .sentiment-positive {

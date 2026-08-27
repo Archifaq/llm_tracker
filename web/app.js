@@ -55,6 +55,20 @@
 
   const SENTIMENT_RU = { positive: "позитивная", neutral: "нейтральная", negative: "негативная" };
 
+  // Matches the fetch_error message every provider adapter raises when its
+  // api_key_env isn't set (see ProviderError in each *_provider.py) -- an
+  // expected "not wired up yet" state, not a real failure, so the UI shows
+  // it as neutral rather than alarming.
+  const MISSING_API_KEY_PATTERN = /environment variable .+ is not set/;
+
+  function ruPlural(n, one, few, many) {
+    const mod10 = n % 10;
+    const mod100 = n % 100;
+    if (mod10 === 1 && mod100 !== 11) return one;
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+    return many;
+  }
+
   // ---------- data loading ----------
 
   async function loadRuns() {
@@ -307,6 +321,46 @@
 
   // ---------- run detail ----------
 
+  function renderErrorGroups(container, agg) {
+    const groups = new Map();
+    agg.errors.forEach((e) => {
+      if (!groups.has(e.provider)) groups.set(e.provider, []);
+      groups.get(e.provider).push(e);
+    });
+
+    groups.forEach((entries, provider) => {
+      const allMissingKey = entries.every((e) => MISSING_API_KEY_PATTERN.test(e.message));
+      const stats = agg.per_provider.find((p) => p.provider === provider);
+      const totalForProvider = stats ? stats.total_queries : entries.length;
+
+      const li = document.createElement("li");
+      const details = document.createElement("details");
+      const summary = document.createElement("summary");
+
+      if (allMissingKey) {
+        summary.innerHTML = `<strong>${escapeHtml(provider)}</strong> <span class="badge neutral">API не подключён</span>`;
+      } else {
+        const errorWord = ruPlural(entries.length, "ошибка", "ошибки", "ошибок");
+        const queryWord = ruPlural(totalForProvider, "запрос", "запроса", "запросов");
+        const badgeText = `${entries.length} ${errorWord} из ${totalForProvider} ${queryWord}`;
+        summary.innerHTML = `<strong>${escapeHtml(provider)}</strong> <span class="badge error">${badgeText}</span> <span class="muted">${escapeHtml(entries[0].message)}</span>`;
+      }
+
+      const nested = document.createElement("ul");
+      nested.className = "plain-list nested-error-log";
+      entries.forEach((e) => {
+        const nestedLi = document.createElement("li");
+        nestedLi.textContent = `${e.query}: ${e.message}`;
+        nested.appendChild(nestedLi);
+      });
+
+      details.appendChild(summary);
+      details.appendChild(nested);
+      li.appendChild(details);
+      container.appendChild(li);
+    });
+  }
+
   function renderSelectedRun() {
     const run = state.filteredRuns.find((r) => r.run_id === state.selectedRunId);
     const heading = $("run-heading");
@@ -363,19 +417,18 @@
       recommendationsList.appendChild(li);
     });
 
-    agg.errors.forEach((e) => {
-      const li = document.createElement("li");
-      li.textContent = `[${e.provider}] ${e.query}: ${e.message}`;
-      errorsList.appendChild(li);
-    });
+    renderErrorGroups(errorsList, agg);
 
     run.observations.forEach((o) => {
       const tr = document.createElement("tr");
       if (o.fetch_error) {
+        const isMissingKey = MISSING_API_KEY_PATTERN.test(o.fetch_error);
+        const badgeClass = isMissingKey ? "badge neutral" : "badge error";
+        const badgeText = isMissingKey ? "API не подключён" : "ошибка";
         tr.innerHTML = `
           <td class="wrap">${escapeHtml(o.query)}</td>
           <td>${escapeHtml(o.provider)}</td>
-          <td colspan="6"><span class="badge error">ошибка</span> ${escapeHtml(o.fetch_error)}</td>
+          <td colspan="6"><span class="${badgeClass}" title="${escapeHtml(o.fetch_error)}">${badgeText}</span></td>
         `;
       } else {
         const mentionedBadge = o.mentioned
@@ -402,6 +455,56 @@
     const div = document.createElement("div");
     div.textContent = value;
     return div.innerHTML;
+  }
+
+  // ---------- trigger run ----------
+
+  const TRIGGER_RUN_LOCKOUT_MS = 60000;
+  const TRIGGER_RUN_DEFAULT_LABEL = "Запустить прогон";
+
+  async function handleTriggerRun() {
+    const button = $("trigger-run-button");
+    const status = $("trigger-run-status");
+
+    button.disabled = true;
+    button.textContent = "Запускаем…";
+    status.textContent = "";
+    status.classList.remove("error-text");
+
+    let response;
+    try {
+      response = await fetch("/api/trigger-run", { method: "POST" });
+    } catch {
+      status.textContent = "Не удалось запустить: сетевая ошибка.";
+      status.classList.add("error-text");
+      button.disabled = false;
+      button.textContent = TRIGGER_RUN_DEFAULT_LABEL;
+      return;
+    }
+
+    let data = null;
+    try {
+      data = await response.json();
+    } catch {
+      // fall through with data == null -- handled below via the generic
+      // HTTP-status message, never surfacing a raw/unparseable body
+    }
+
+    if (response.ok && data && data.ok) {
+      status.textContent = "Прогон запущен — обновите дашборд через 3-5 минут.";
+      button.textContent = "Запущено";
+      setTimeout(() => {
+        button.disabled = false;
+        button.textContent = TRIGGER_RUN_DEFAULT_LABEL;
+      }, TRIGGER_RUN_LOCKOUT_MS);
+      return;
+    }
+
+    const message = (data && data.error) || `HTTP ${response.status}`;
+    status.textContent = `Не удалось запустить: ${message}`;
+    status.classList.add("error-text");
+    button.disabled = false;
+    button.textContent = TRIGGER_RUN_DEFAULT_LABEL;
   }
 
   // ---------- boot ----------
@@ -449,6 +552,7 @@
       state.selectedRunId = Number(e.target.value);
       renderSelectedRun();
     });
+    $("trigger-run-button").addEventListener("click", handleTriggerRun);
 
     applyDateFilter();
 

@@ -253,6 +253,58 @@ empty-state message, not fake data, until the first real run is exported)
 and is meant to be committed after every `export-web` -- see the weekly
 GitHub Actions workflow below.
 
+### Errors, compactly
+
+The dashboard groups `Ошибки провайдеров` by provider instead of one line
+per failed query:
+
+- If every failure for a provider is "environment variable ... is not
+  set" (the provider just isn't wired up with a key yet), it collapses to
+  one neutral line: **provider name + "API не подключён"** -- an expected
+  state, not an alarm.
+- Otherwise: **provider name + a red "N ошибок из M запросов" badge** and
+  the first error message as a preview.
+- Either way, click the line (a native `<details>`/`<summary>`, no extra
+  JS) to expand the full original per-query error log underneath.
+
+The same logic collapses each failed row in the big observations table to
+a single badge ("API не подключён" / "ошибка") instead of repeating the
+raw message 18 times -- hover the badge (`title` attribute) for the full
+text. Only the *rendering* changed; `runs.json`/`export-web` still carry
+every individual error message, nothing is dropped.
+
+### Запуск прогона из интерфейса
+
+The **"Запустить прогон"** button calls a Cloudflare Pages Function
+(`functions/api/trigger-run.js`) that dispatches `weekly-run.yml` via
+GitHub's `workflow_dispatch` API -- no separate backend. **This file must
+stay at the repo root** (`functions/api/...`), not inside `web/`: Cloudflare
+Pages only looks for Functions in a `/functions` directory at the project
+root, never inside the configured build output directory (`web/` here) --
+see the comment at the top of that file.
+
+One-time setup (without this, the button returns a clear error -- that is
+expected until you do this, not a bug):
+
+1. **Create a fine-grained GitHub PAT**, scoped as narrowly as possible:
+   [github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens)
+   -> **Generate new token** -> **Repository access**: only `llm_tracker`
+   -> **Permissions**: **Actions** -> **Read and write**, everything else
+   left at "No access". Copy the token value (shown once).
+2. **Add it to Cloudflare Pages**: project `llm-tracker` -> **Settings** ->
+   **Environment variables** -> add a variable named exactly
+   `GITHUB_DISPATCH_TOKEN`, paste the token as its value, and mark it
+   **Secret/Encrypt** (not plaintext). Apply to the Production environment
+   (and Preview too, if you want the button to work on preview deploys).
+3. Redeploy (or just wait for the next push) so the Function picks up the
+   new environment variable.
+
+The button disables itself and shows "Запускаем..." while the request is
+in flight, stays disabled for ~60s after a successful dispatch (a simple
+"don't double-click" guard, not real rate limiting -- fine for an internal
+tool), and re-enables immediately with an inline error message (never
+`alert()`, never the raw GitHub response or the token) on failure.
+
 ## Manual browser-based spot-check (not part of the pipeline)
 
 The brief requires official APIs as the only mechanism in the automated

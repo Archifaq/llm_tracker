@@ -2,6 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from e100_visibility.cli import main
 from e100_visibility.providers.base import ProviderResponse
@@ -55,6 +56,12 @@ class _FakeProvider:
 class ExportWebTests(unittest.TestCase):
     def setUp(self):
         register_provider("test-export-fake", _FakeProvider)
+        # see the matching comment in tests/test_cli.py: fetch_all() now
+        # sleeps 4s per query, and these tests call `main(["run", ...])`.
+        sleep_patch = patch("e100_visibility.fetch.time.sleep")
+        sleep_patch.start()
+        self.addCleanup(sleep_patch.stop)
+
         self.tmp_dir = tempfile.TemporaryDirectory()
         self.tmp_path = Path(self.tmp_dir.name)
         self.config_path = self.tmp_path / "config.toml"

@@ -1,6 +1,7 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from e100_visibility.cli import main
 from e100_visibility.providers.base import ProviderResponse
@@ -54,6 +55,13 @@ class _FakeProvider:
 class CliRunTests(unittest.TestCase):
     def setUp(self):
         register_provider("test-cli-fake", _FakeProvider)
+        # fetch_all() now sleeps 4s after every query -- these tests run
+        # `main(["run", ...])` for real, so without this the suite would
+        # burn several seconds of real wall-clock time per test.
+        sleep_patch = patch("e100_visibility.fetch.time.sleep")
+        sleep_patch.start()
+        self.addCleanup(sleep_patch.stop)
+
         self.tmp_dir = tempfile.TemporaryDirectory()
         self.tmp_path = Path(self.tmp_dir.name)
         self.config_path = self.tmp_path / "config.toml"

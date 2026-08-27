@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 from e100_visibility.config import AppConfig, BrandConfig, MarketConfig, ProviderConfig, AnalysisConfig, StorageConfig, ReportConfig
 from e100_visibility.fetch import fetch_all
@@ -42,7 +43,8 @@ class FetchAllTests(unittest.TestCase):
         register_provider("test-fails", _AlwaysFailsProvider)
         register_provider("test-succeeds", _AlwaysSucceedsProvider)
 
-    def test_one_failing_provider_does_not_block_others(self):
+    @patch("e100_visibility.fetch.time.sleep")
+    def test_one_failing_provider_does_not_block_others(self, mock_sleep):
         config = _config(
             (
                 ProviderConfig(name="broken", kind="test-fails", model="m", api_key_env="X"),
@@ -60,13 +62,20 @@ class FetchAllTests(unittest.TestCase):
         self.assertTrue(all(r.ok for r in by_provider["healthy"]))
         self.assertEqual(len(results), 4)  # 2 providers x 2 queries
 
-    def test_unknown_provider_kind_recorded_as_error_not_raised(self):
+        # one 4s pause after every query, success or failure, real time never elapses here
+        self.assertEqual(mock_sleep.call_count, 4)
+        mock_sleep.assert_called_with(4)
+
+    @patch("e100_visibility.fetch.time.sleep")
+    def test_unknown_provider_kind_recorded_as_error_not_raised(self, mock_sleep):
         config = _config((ProviderConfig(name="ghost", kind="does-not-exist", model="m", api_key_env="X"),))
 
         results = fetch_all(config, log=lambda _msg: None)
 
         self.assertEqual(len(results), 2)
         self.assertTrue(all(not r.ok for r in results))
+        # the provider never builds, so the per-query loop (and its sleep) never runs
+        mock_sleep.assert_not_called()
 
 
 if __name__ == "__main__":

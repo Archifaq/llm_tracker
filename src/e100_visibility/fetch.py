@@ -9,6 +9,7 @@ still shows up in the final report.
 from __future__ import annotations
 
 import sys
+import time
 from dataclasses import dataclass
 
 from .config import AppConfig, ProviderConfig
@@ -56,4 +57,5 @@ def fetch_all(config: AppConfig, *, log=lambda msg: print(msg, file=sys.stderr))
                 results.append(FetchResult(provider_cfg.name, provider_cfg.model, query, None, str(exc)))
             else:
                 results.append(FetchResult(provider_cfg.name, provider_cfg.model, query, response, None))
+            time.sleep(4)
     return results

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from typing import Callable
 
+from .claude_provider import ClaudeProvider
 from .gemini_provider import GeminiProvider
 from .offline_provider import OfflineDemoProvider
 from .openai_provider import OpenAIProvider
@@ -18,6 +19,7 @@ _FACTORIES: dict[str, Callable[..., object]] = {
     "openai": OpenAIProvider,
     "gemini": GeminiProvider,
     "perplexity": PerplexityProvider,
+    "claude": ClaudeProvider,
     "offline": OfflineDemoProvider,
 }
 

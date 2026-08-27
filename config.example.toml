@@ -131,6 +131,17 @@ api_key_env = "PERPLEXITY_API_KEY"
 enabled = true
 timeout_seconds = 60
 
+[[providers]]
+name = "claude"
+kind = "claude"
+# The adapter always enables Anthropic's server-side web_search tool for a
+# grounded, citable answer -- works on an ordinary model, no dedicated
+# search model needed (unlike OpenAI's Chat Completions).
+model = "claude-sonnet-5"
+api_key_env = "ANTHROPIC_API_KEY"
+enabled = true
+timeout_seconds = 60
+
 [analysis]
 # "heuristic": deterministic, local, free, uses the [[competitors]] list
 #   above and is what the test suite exercises.
